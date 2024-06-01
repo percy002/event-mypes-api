@@ -23,4 +23,6 @@ Route::prefix('user')->group(function () {
     Route::post('/', [UserController::class, 'store']);
     Route::get('/{id}', [UserController::class, 'show']);
     Route::get('/buscar/{dni}', [UserController::class, 'asistencia']);
+    Route::get('/encontrar/{dni}', [UserController::class, 'encontrar']);
+    Route::get('/all', [UserController::class, 'list']);
 });

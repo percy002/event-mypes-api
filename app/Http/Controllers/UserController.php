@@ -12,6 +12,9 @@ class UserController extends Controller
     public function index()
     {
         //
+        
+        $users = User::all();
+        return response()->json(['users' => $users]);
     }
 
     /**
@@ -32,7 +35,7 @@ class UserController extends Controller
             $request->validate([
                 'nombres' => 'required|string|max:100',
                 'apellidos' => 'required|string|max:100',
-                'dni' => 'required|string|max:100|unique:users',
+                'dni' => 'required|string|size:8|unique:users',
                 'gerencia' => 'required|string|max:100',
                 'cargo' => 'required|max:50',
                 'genero' => 'required|string|max:50',
@@ -43,7 +46,7 @@ class UserController extends Controller
                 'apellidos.required' => 'El campo apellidos es obligatorio.',
                 'apellidos.max' => 'El campo apellidos no debe exceder los 100 caracteres.',
                 'dni.required' => 'El campo DNI es obligatorio.',
-                'dni.max' => 'El campo DNI no debe exceder los 100 caracteres.',
+                'dni.size' => 'El campo DNI debe tener 8 caracteres.',
                 'dni.unique' => 'El DNI ya está en uso.',
                 'gerencia.required' => 'El campo gerencia es obligatorio.',
                 'gerencia.max' => 'El campo gerencia no debe exceder los 100 caracteres.',
@@ -125,5 +128,22 @@ class UserController extends Controller
             return response()->json(['message' => 'Persona no encontrada']);
         }
     }
+    public function encontrar(string $dni)
+    {
+        $user = User::where('dni', $dni)->first();
+
+        if ($user) {
+            return response()->json(['message' => 'Persona encontrada', 'user' => $user]);
+        } else {
+            return response()->json(['message' => 'Persona no encontrada']);
+        }
+    }
+
+    public function list()
+    {
+        $users = User::all();
+        return response()->json(['users' => $users]);
+    }
+
     
 }
