@@ -13,7 +13,7 @@ class UserController extends Controller
     {
         //
         
-        $users = User::all();
+        $users = User::where('asistencia', '1')->get();
         return response()->json(['users' => $users]);
     }
 
@@ -141,7 +141,7 @@ class UserController extends Controller
 
     public function list()
     {
-        $users = User::all();
+        $users = User::where('asistencia','1');
         return response()->json(['users' => $users]);
     }
 
