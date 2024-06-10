@@ -31,45 +31,51 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
+        $messages = [
+            'required' => 'El campo :attribute es obligatorio.',
+            'max' => 'El campo :attribute no debe exceder los :max caracteres.',
+            'size' => 'El campo :attribute debe tener :size caracteres.',
+            'unique' => 'El :attribute ya está en uso.',
+            'email' => 'El campo :attribute debe ser un correo válido.'
+        ];
+        
         try {
             $request->validate([
-                'nombres' => 'required|string|max:100',
+                'categoria' => 'required|string|max:50',
+                'razon_social' => 'required|string|max:255',
+                'nombre_comercial' => 'required|string|max:255',
+                'ruc' => 'required|string|max:255|unique:users',
+                'direccion' => 'required|string',
+                'email_empresa' => 'required|email',
+                'nombre_representante' => 'required|string|max:100',
+                'apellidos_representante' => 'required|string|max:100',
+                'nombres' => 'required|string',
                 'apellidos' => 'required|string|max:100',
                 'dni' => 'required|string|size:8|unique:users',
-                'gerencia' => 'required|string|max:100',
                 'cargo' => 'required|max:50',
-                'genero' => 'required|string|max:50',
-                'rol' => 'string|max:255',
-            ], [
-                'nombres.required' => 'El campo nombres es obligatorio.',
-                'nombres.max' => 'El campo nombres no debe exceder los 100 caracteres.',
-                'apellidos.required' => 'El campo apellidos es obligatorio.',
-                'apellidos.max' => 'El campo apellidos no debe exceder los 100 caracteres.',
-                'dni.required' => 'El campo DNI es obligatorio.',
-                'dni.size' => 'El campo DNI debe tener 8 caracteres.',
-                'dni.unique' => 'El DNI ya está en uso.',
-                'gerencia.required' => 'El campo gerencia es obligatorio.',
-                'gerencia.max' => 'El campo gerencia no debe exceder los 100 caracteres.',
-                'cargo.required' => 'El campo cargo es obligatorio.',
-                'cargo.max' => 'El campo cargo no debe exceder los 50 caracteres.',
-                'genero.required' => 'El campo género es obligatorio.',
-                'genero.max' => 'El campo género no debe exceder los 50 caracteres.',
-                'rol.max' => 'El campo rol no debe exceder los 255 caracteres.'
-            ]);
+                'email_participante' => 'required|email|unique:users',
+                'celular' => 'required|string|max:20',
+            ], $messages);
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json(['errors' => $e->errors()], 422);
         }   
         
         $user = User::create([
+            'categoria' => $request->categoria,
+            'razon_social' => $request->razon_social,
+            'nombre_comercial' => $request->nombre_comercial,
+            'ruc' => $request->ruc,
+            'direccion' => $request->direccion,
+            'email_empresa' => $request->email_empresa,
+            'nombre_representante' => $request->nombre_representante,
+            'apellidos_representante' => $request->apellidos_representante,
+        
             'nombres' => $request->nombres,
             'apellidos' => $request->apellidos,
             'dni' => $request->dni,
-            'gerencia' => $request->gerencia,
             'cargo' => $request->cargo,
-            'genero' => $request->genero,
             'email' => $request->email,
-            'rol' => $request->rol ?? 'user',
-            'password' => Hash::make($request->password),
+            'rol' => 'user',
         ]);
         //loguear al usuario
         // Auth::login($user);
