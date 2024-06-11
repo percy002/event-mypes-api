@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RegisterCompanyEvent;
+use App\Http\Controllers\AttendanceRecordController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,10 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('participante')->group(function () {
-    Route::get('/', [UserController::class, 'index']);
-    Route::post('/', [UserController::class, 'store']);
-    Route::get('/{id}', [UserController::class, 'show']);
-    Route::get('/buscar/{dni}', [UserController::class, 'asistencia']);
-    Route::get('/encontrar/{dni}', [UserController::class, 'encontrar']);
+    Route::get('/', [AttendanceRecordController::class, 'index']);
+    Route::post('/', [RegisterCompanyEvent::class, 'store']);
+    Route::get('/{id}', [RegisterCompanyEvent::class, 'show']);
+    Route::get('/buscar/{qr_code}', [AttendanceRecordController::class, 'asistencia']);
+    Route::get('/encontrar/{qr_code}', [RegisterCompanyEvent::class, 'encontrarEmpresa']);
     Route::get('/all', [UserController::class, 'list']);
 });

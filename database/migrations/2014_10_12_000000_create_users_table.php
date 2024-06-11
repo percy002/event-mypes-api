@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('gerencia',100);
             $table->string('cargo',50);
             $table->string('genero',50);
+            $table->string('email')->unique();
             $table->boolean('asistencia')->default(0);
             $table->string('rol')->default('user');
             $table->rememberToken();

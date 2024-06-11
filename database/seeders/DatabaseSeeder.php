@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
+use App\Models\Event;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -18,5 +18,11 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        Event::create([
+            'name' => 'Evento MYPES',
+            'description' => 'Evento de capacitación de MYPES',
+            'start_date' => '2024-06-13 00:00:00',
+            'end_date' => '2024-06-13 23:59:00'
+        ]);
     }
 }

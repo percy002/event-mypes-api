@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('company_event', function (Blueprint $table) {
+        Schema::create('company_events', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')->constrained();
             $table->foreignId('event_id')->constrained();
             $table->string('qr_code',255);
-            $table->number('number_of_people');
+            $table->integer('number_of_people');
             $table->dateTime('check_in');
             $table->timestamps();
         });
